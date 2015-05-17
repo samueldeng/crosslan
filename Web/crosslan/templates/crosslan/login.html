@@ -1,0 +1,26 @@
+{% extends "crosslan/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Cross Lan | Login {% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/login.css' %}">
+{% endblock %}
+
+{% block mainbody %}
+<div id="login-panel" class="shadow-block panel">
+	<div id="login-gravatar" class="shadow-block round" title="Emmet"></div>
+	<div id="login-username">Emmet Jang</div>
+	<form action="{% url 'crosslan:login' %}" method="post" id="loginForm">
+	{% csrf_token %}
+		<input class="k-textbox" type="text" id="id_username" value="Username" name="username"/>
+		<input class="k-textbox" type="text" id="id_password" value="Password" name="password"/>
+		<input class="k-button" type="submit" id="id_submit" value="Login"/>
+	</form>
+	<div id="panel-cover"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'crosslan/js/login.js' %}"></script>
+{% endblock %}

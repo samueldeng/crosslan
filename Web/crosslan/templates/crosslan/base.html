@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- CSS -->
+    <!-- link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/bootstrap.min.css' %}" -->
+    <link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/kendo.common.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/kendo.flat.min.css' %}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/base.css' %}">
+    {% block stylesheet %}{% endblock %}
+
+    <!-- favicon -->
+    <!-- <link rel="shortcuticon" type="image/x-icon" href="{% static 'crosslan/img/favicon.ico' %}"> -->
+    <link rel="icon" type="image/x-icon" href="{% static 'crosslan/img/favicon.ico' %}">
+  </head>
+
+  <body>
+    <div id="header" class="shadow-block">
+      <div id="inner-header">
+        <a id="logo" href="{% url 'crosslan:index' %}" alt="Cross Lan" title="Cross Lan">
+          <img src="{% static 'crosslan/img/digitalocean-horizental.png' %}" style="height: 60px">
+        </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="wrapper">
+      <div id="mainbody">
+      {% block mainbody %}{% endblock %}
+      </div>
+    </div>
+
+    <div id="footer">
+      <div id="inner-footer">
+        <div class="meta">
+          <p>Developed by Emmet & Sameul. Powered by <a href="http://www.telerik.com/kendo-ui">Tendo UI</a>, <a href="http://jquery.com">jQuery</a> and <a href="http://www.sublimetext.com">Sublime Text</a>. </p>
+          <p>Copyright © 2014-2015 All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'crosslan/js/jquery.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'crosslan/js/kendo.core.min.js' %}"></script>
+    <script src="{% static 'crosslan/js/base.js' %}"></script>
+    {% block script %}{% endblock %}
+  </body>
+</html>

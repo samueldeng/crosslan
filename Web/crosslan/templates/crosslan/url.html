@@ -1,0 +1,24 @@
+{% extends "crosslan/base.html" %}
+{% load staticfiles %}
+
+{% block title %} TEM | ShortUrl {% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/url.css' %}">
+{% endblock %}
+
+{% block mainbody %}
+<div id="url-panel" class="shadow-block panel">
+	<form action="{% url 'crosslan:shortUrl' %}" method="post" id="urlForm">
+	{% csrf_token %}
+		<input class="k-textbox innerLabel" type="text" id="id_originUrl" value="Url Here" name="originUrl"/>
+		<input class="k-button" type="submit" id="id_submit" value="Shorten"/>
+	</form>
+	<input class="k-textbox" id="id_shortUrl" readonly="true"/>
+	<div id="panel-cover"></div>
+</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'crosslan/js/url.js' %}"></script>
+{% endblock %}
