@@ -193,17 +193,18 @@ class CrossLanContainerDataUsage(Resource):
 
             output_chain = iptc.Chain(filter_table, "OUTPUT")
 
-            bytes = 0
+            bytes = None
             for rule in output_chain.rules:
                 sport = str(rule.matches[0].parameters["sport"])
                 log.debug(rule.get_counters())
                 if sport == str(port):
                     counter = rule.get_counters()
                     packets = counter[0]
+                    bytes = counter[1]
                     log.debug("packet #:" + str(packets))
                     log.debug("bytes #:" + str(bytes))
-                    bytes = counter[1]
                     break
+            if bytes is None:
                 raise Exception("NotFoundPort")
 
             json_bytes = json.dumps({"data-usage": bytes})
