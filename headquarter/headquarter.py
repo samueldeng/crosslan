@@ -1,12 +1,14 @@
 import subprocess
 import traceback
-from flask import Flask, request
-from flask.ext.restful import abort, Api, Resource
 import json
-import iptc
 import logging
 import os
 import sys
+
+from flask import Flask, request
+from flask.ext.restful import abort, Api, Resource
+import iptc
+
 
 ss_lists = ["proxy = ss://aes-256-cfb:password@10.0.0.0:1080",
             "proxy = ss://aes-256-cfb:password@10.0.0.0:1080"]
@@ -126,10 +128,9 @@ class CrossLanContainerRunningStatus(Resource):
 
         try:
             if cow_process.get(port) is not None:
-                return json.dumps({"status": "running"}), 201
+                return {"status": "running"}, 201
             else:
-                return json.dumps({"status": "stop"}), 201
-
+                return {"status": "stop"}, 201
         except Exception, e:
             log.error(e.message)
             log.error("ARGS:  " + str(port))
@@ -207,9 +208,7 @@ class CrossLanContainerDataUsage(Resource):
             if bytes is None:
                 raise Exception("NotFoundPort")
 
-            json_bytes = json.dumps({"data-usage": bytes})
-
-            return json_bytes, 201
+            return {"data-usage": bytes}, 201
         except Exception, e:
             log.error(e.message)
             log.error("ARGS:  " + str(port))
