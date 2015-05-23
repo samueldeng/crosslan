@@ -71,7 +71,7 @@ class CrossLanContainers(Resource):
             # Insert rule to the OUTPUT chain in filter Table.
             output_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "OUTPUT")
             output_chain.insert_rule(rule)
-            return 201
+            return None, 201
         except Exception, e:
             log.error(e.message)
             log.error("ARGS:  " + str(port))
@@ -99,20 +99,20 @@ class CrossLanContainerRunningStatus(Resource):
                 # cow_process[port] = subprocess.Popen([cmd, "-rc", rc_file])
 
                 cow_process[port] = subprocess.Popen(["./cow", "-rc", "./rc"], cwd=wd)
-                return 201
+                return None, 201
             if action == "stop":
                 cow_p = cow_process[port]
                 log.debug(cow_p)
                 cow_p.terminate()
                 cow_process[port] = None
-                return 201
+                return None, 201
             if action == "restart":
                 wd = cl_container_home + "/cl_container_" + str(port) + "/"
 
                 cow_p = cow_process[port]
                 cow_p.terminate()
                 cow_process[port] = subprocess.Popen(["./cow", "-rc", "./rc"], cwd=wd)
-                return 201
+                return None, 201
             else:
                 abort(400, message="Wrong Action.")
         except Exception, e:
@@ -174,7 +174,7 @@ class CrossLanContainerBindingIps(Resource):
             f.close()
             # TODO restart.
 
-            return 201
+            return None, 201
         except Exception, e:
             log.error(traceback.format_exc())
             log.error(e.message)
