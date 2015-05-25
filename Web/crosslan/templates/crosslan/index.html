@@ -2,11 +2,112 @@
 {% load staticfiles %}
 
 {% block title %}
-  Cross Lan
+CrossLAN - Web Acceleration Service in XJTU
+{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'crosslan/css/index.css' %}">
 {% endblock %}
 
 {% block mainbody %}
+<div class="bg">
+	<div class="jumbotron col-md-offset-2 col-md-8" style="position: absolute">
+		<h1>CrossLAN</h1>
+		<p style="margin-top: 30px;"> Web Acceleration Service</p>
+		<p>for XJTUer</p>
+		<a class="btn btn-hg btn-primary" href="#" role="button" style="margin-top: 100px;">Learn more</a>
+	</div>
+</div>
 
+<div class="container">
+	<div class="row">
+		<div class="col-sm-offset-1 col-sm-10"><h3>Starting to use CrossLAN</h3></div>
+	</div>
+	<div class="row">
+
+		<div class="col-md-12"><p>&nbsp &nbsp &nbsp &nbsp Our Team Build a Computer Cluster to Provide a High Available and High Speed Oversea Acceleration Service. If you want to start use our service, please contact us.</p></div>
+
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/high_speed.png' %}">
+				<h3 class="tile-title">High Speed</h3>
+				<p style="margin-top: 10px; margin-bottom: 15px;">Youtube(480p), Facebook, Twitter</p>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+
+		<div class="col-sm-4">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/setting.png' %}">
+				<h3 class="tile-title">Easy to Use</h3>
+				<p style="margin-top: 10px; margin-bottom: 15px;">10 Seconds Configuration</p>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/icon-lowCost.png' %}">
+				<h3 class="tile-title">Low Price</h3>
+				<p style="margin-top: 10px; margin-bottom: 15px;">1 RMB = 1GB</p>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="bg-2">
+	<div class="container">
+		<div class="jumbotron" style="float: right;">
+			<h1>Compatibility</h1>
+			<p style="margin-top: 30px;">Windows, Linux, Mac</p>
+			<p>iOS, Android, BlackBerry</p>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="margin-bottom: 70px;">
+	<div class="row">
+		<div class="col-sm-offset-1 col-sm-10"><h3>More Features</h3></div>
+	</div>
+	<div class="row">
+
+		<div class="col-md-12"><p>Our Team Build a Computer Cluster to Provide a High Avalabilable and Speed Oversea Acceleration Service. If you want to start use our service, please contact us.</p></div>
+
+	</div>
+	<div class="row">
+		<div class="col-sm-3">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/icon_loadbalancer.png' %}">
+				<h3 class="tile-title" style="margin-bottom: 30px">Auto-Proxy Switch</h3>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+
+		<div class="col-sm-3">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/privacy.png' %}">
+				<h3 class="tile-title" style="margin-bottom: 30px">Privacy</h3>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/supporting.png' %}">
+				<h3 class="tile-title" style="margin-bottom: 30px">Technical Support</h3>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="tile">
+			<img class="tile-image big-illustration" src="{% static 'crosslan/img/safe.png' %}">
+				<h3 class="tile-title" style="margin-bottom: 30px">Safe</h3>
+				<a href="#" class="btn btn-primary btn-large btn-block">Learn More</a>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block script %}
