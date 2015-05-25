@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	$('#inputUsername').focus();
+
 	$('#formSignin').submit(function(e){
 		// var pass = $("#inputPassword").prop("value");
 		// if(pass == "" || pass == $("#inputPassword").attr("value")){
@@ -39,6 +41,6 @@ $(document).ready(function(){
 		e.preventDefault();
 	});
 	if($('i#notifier').length != 0){
-		alert("Signed Out!");
+		//alert("Signed Out!");
 	}
 });

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('#inputUsername').focus();
 	$('#formSignup').submit(function(e){
 		$('#panel-cover').css('display', 'block');
 		$.ajax({
@@ -8,7 +9,6 @@ $(document).ready(function(){
 			success: function(data, textStatus, jqXHR){
 				switch($.parseJSON(data).status) {
 					case 0:
-					alert(0);
 					location.href = $.parseJSON(data).redirect;
 					break;
 					case 1:

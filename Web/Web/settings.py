@@ -53,6 +53,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+CRON_CLASSES = [
+    "crosslan.backend.UpdateDataCronJob",
+    "crosslan.backend.CronTester",
+]
+
 ROOT_URLCONF = 'Web.urls'
 
 TEMPLATES = [

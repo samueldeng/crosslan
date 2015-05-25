@@ -12,7 +12,7 @@ class CrossLanUser(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
     host = models.CharField('Proxy Address', max_length=20, default=conf.PROXY_HOST)	# May not be necessary
     port = models.IntegerField('Proxy Port', unique=True)
-    data = models.IntegerField('Data Balance', default=0)
+    data = models.IntegerField('Data Balance', default=conf.GIFT_BALANCE)
     last_update = models.DateTimeField('Last Update Time', auto_now=True)
     bind = models.BooleanField('Bind or Not', default=False)
 
@@ -46,10 +46,12 @@ class RedeemCode(models.Model):
 	INACTIVE = 'IN'
 	ACTIVE = 'AC'
 	USED = 'US'
+	SP = 'SP'
 	STATUS_CHOICES = (
 		(INACTIVE, 'Inactive'),
 		(ACTIVE, 'Active'),
 		(USED, 'Code Used'),
+		(SP, 'Special'),
 	)
 	status = models.CharField(max_length=2,
 		choices=STATUS_CHOICES,
@@ -57,10 +59,17 @@ class RedeemCode(models.Model):
 
 	objects = RedeemManager()
 
+	def __unicode__(self):
+		return self.code + " - "+ self.status
+
 	def use(self):
 		if(self.status==self.ACTIVE):
 			self.status = self.USED
 			return True
+		elif(self.status==self.SP):
+			return True
+		else:
+			return False
 
 	def activate(self):
 		if(self.status==self.INACTIVE):

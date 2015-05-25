@@ -1,5 +1,7 @@
 from crosslan import conf
-import requests, json
+import requests, json, models
+
+from django_cron import CronJobBase, Schedule
 
 def Post(url, data):
 	r = requests.post(conf.BACKEND_HOST + url, json.dumps(data))
@@ -71,3 +73,37 @@ def getDataUsage(port):
 		return r.json()['data-usage']
 	else:
 		return False
+
+def updateData(user):
+	try:
+		deltaData = getDataUsage(user.port)
+		if(deltaData is False):
+			return False
+		user.data = user.data - deltaData
+		user.save()
+		if(user.data <= 0):
+			stopProxy(user.port)
+		return user.data
+	except Exception,e:
+		return False
+
+class CronTester(CronJobBase):
+	RUN_EVERY_MINS = 1
+
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+	code = 'crosslan.CronTester'
+
+	def do(self):
+		print self.code
+
+
+class UpdateDataCronJob(CronJobBase):
+	RUN_EVERY_MINS = 30
+
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
+	code = 'crosslan.UpdateDataCronJob'
+
+	def do(self):
+		allUser = models.CrossLanUser.objects.all()
+		for u in allUser:
+			updateData(user=u)

@@ -16,6 +16,9 @@ $(document).ready(function(){
 	function bindingIpChangeEvent(){
 		$('#binding').addClass('changed');
 		$('#changeSubmitWrapper').show();
+		$(':checkbox').on('change.radiocheck', function() {
+			bindingIpChangeEvent();
+		});
 	}
 
 	function bindingIpChangeDone(){
@@ -43,9 +46,29 @@ $(document).ready(function(){
 
 	function inputValidation(input, type){
 		if(type=="ip"){
-
+			var parts = input.split('.');
+			if(parts.length!=4){
+				return false;
+			}
+			var last = parts.pop();
+			parts = parts.concat(last.split('/'));
+			for(var i=0;i<4;++i){
+				var n = parts[i];
+				if (n.length==0 || isNaN(n) || n<0 || n>255){
+					return false;
+				}
+			}
+			var n = parts[4];
+			if(!n){
+				return true;
+			}else{
+				if (n.length==0 || isNaN(n) || n<0 || n>255){
+					return false;
+				}
+			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	{
@@ -65,7 +88,7 @@ $(document).ready(function(){
 			height: 20,
 			button_width: 20,
 		});
-		$(':checkbox').radiocheck('check');
+		$('label>:checkbox').radiocheck('check');
 		if(!checked){
 			disableBindIp();
 		}
@@ -135,31 +158,37 @@ $(document).ready(function(){
 	});
 
 	$('#addIpInput>.col-sm-9>.btn-success').click(function(e){
+		var input = $('#addIpInput>.col-sm-3>input');
+		if(!inputValidation(input.prop('value'),'ip')){
+			alert('Invalid IP/IPset');
+			return;
+		}
 		var ipCount = $('#bindIpBlock>div>label.checkbox').size();
 		$('#addIpInput').before("<label class='checkbox biglabel' for='boxIp"+(ipCount)+"'><input type='checkbox' data-toggle='checkbox' value='0' id='boxIp"+(ipCount)+"' required></label>");
 		var newIp = $('#addIpInput').prev().children(":checkbox");
-		var input = $('#addIpInput>.col-sm-3>input');
 		newIp.after(input.prop('value'));
-		newIp.radiocheck();
-		if(!$('#bindingSwitch').prop('checked')){
-			newIp.radiocheck('disable');
-		}else{
-			newIp.radiocheck('check');
-		}
+		newIp.radiocheck('check');
 		input.prop('value','');
-		$('#addIpInput').toggle();
-		$('a#addIp').toggle();
+		$('#addIpInput').hide();
+		$('a#addIp').show();
 
 		bindingIpChangeEvent();
 		lastAdded++;
 		e.preventDefault();
 	});
 
+	$('#addIpInput>.col-sm-3>input').keypress(function(e){
+		if( e.which == 13){
+			$('#addIpInput>.col-sm-9>.btn-success').click();
+			e.preventDefault();
+		}
+	});
+
 	$('#addIpInput>.col-sm-9>.btn-danger').click(function(e){
 		var input = $('#addIpInput>.col-sm-3>input');
 		input.prop('value','');
-		$('#addIpInput').toggle();
-		$('a#addIp').toggle();
+		$('#addIpInput').hide();
+		$('a#addIp').show();
 		e.preventDefault();
 	});
 
@@ -203,7 +232,7 @@ $(document).ready(function(){
 	});
 
 	$('#changeSubmitWrapper').find('a').click(function(e){
-		$(':checkbox').radiocheck('uncheck');
+		$('label>:checkbox').radiocheck('uncheck');
 		for(var i=0;i<lastIp.length;++i){
 			$('#'+lastIp[i]).radiocheck('check');
 		}

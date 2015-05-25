@@ -29,7 +29,8 @@ def signup(request):
 				return HttpResponse(json.dumps({'status':1}), content_type="text/plain")
 			elif (auth.models.User.objects.filter(username=username).exists()):
 				return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
-			elif (not models.RedeemCode.objects.filter(code=redeem,status=models.RedeemCode.ACTIVE).exists()):
+			elif (not models.RedeemCode.objects.filter(code=redeem,status=models.RedeemCode.ACTIVE).exists()
+				and not models.RedeemCode.objects.filter(code=redeem,status=models.RedeemCode.SP).exists()):
 				# Add Current-IP
 				return HttpResponse(json.dumps({'status':3}), content_type="text/plain")
 			else:
@@ -110,7 +111,7 @@ def signout(request):
 	return HttpResponseRedirect(reverse('crosslan:signin'))
 
 # Fuck Python Circular Import
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 @login_required(login_url=reverse_lazy('crosslan:signin'))
 def info(request):
 	u = request.user.crosslanuser
@@ -126,14 +127,18 @@ def info(request):
 	balance = utils.getHuman(u.data)
 	bind = u.bind
 	clientIp = utils.getClientIp(request)
-	ipObjects = models.BindingIP.objects.exclude(user=u, ip=clientIp).filter(user=u)
+	ipObjects = models.BindingIP.objects.filter(user=u)
 	ips = []
 	for ipOb in ipObjects:
 		ips.append(ipOb.ip)
 	if(clientIp not in ips):
+		print clientIp
+		print ips
 		newIp = models.BindingIP.objects.bind_ip(user=u, ip=clientIp)
 		newIp.save()
 		backend.setBindIp(u.port,ips)
+	if (clientIp in ips):
+		ips.remove(clientIp)
 	c = {
 		 'pachost': pachost,
 		 'host': host,
@@ -151,6 +156,10 @@ def refreshInfo(request):
 	#TODO: What if User visit /info/refresh directly
 	u = request.user.crosslanuser
 	host = u.host + ':' + str(u.port)
+	if(backend.updateData(user=u) is False):
+		balance = 'Unknown'
+	else:
+		balance = utils.getHuman(u.balance)
 	try:
 		backend.restartProxy(u.port)
 		status = backend.getProxyStatus(u.port)
@@ -159,10 +168,6 @@ def refreshInfo(request):
 		status = False
 	if(status is False):
 		status = 'Unknown'
-	deltaData = backend.getDataUsage(u.port)
-	u.data = u.data + deltaData
-	u.save()
-	balance = utils.getHuman(u.data)
 	c = {
 		 'host': host,
 		 'status': status,
@@ -182,12 +187,23 @@ def rebindIp(request):
 			else:
 				return HttpResponse(json.dumps({"message":"Bind Error"}), content_type="text/plain")
 			u.save()
-			models.BindingIP.objects.filter(user=u).delete()
 			ips = request.POST['ips'].split(",")
 			ips = utils.unique(ips)
+			existsIpObjects = models.BindingIP.objects.filter(user=u)
+			existsIps = []
+			ipToRemove = []
+			for eIpOb in existsIpObjects:
+				existsIps.append(eIpOb.ip)
+				if(eIpOb.ip not in ips):
+					ipToRemove.append(eIpOb.ip)
+			print ipToRemove
+			for ip in ipToRemove:
+				models.BindingIP.objects.filter(user=u,ip=ip).delete()
+			print ips
 			for ip in ips:
-				i = models.BindingIP.objects.bind_ip(user=u, ip=ip)
-				i.save()
+				if(ip not in existsIps):
+					i = models.BindingIP.objects.bind_ip(user=u, ip=ip)
+					i.save()
 			backend.setBindIp(u.port, ips)
 			return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")
 		else:
@@ -197,3 +213,7 @@ def rebindIp(request):
 		traceback.format_exc()
 		return HttpResponse(json.dumps({"message":"Error"}), content_type="text/plain")
 
+@user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('crosslan:signin'))
+def adminControlPanel(request):
+	#TODO: Build a convinient Control Panel for Administrator
+	return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")

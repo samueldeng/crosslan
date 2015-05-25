@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 	url(r'^info/$', views.info, name='info'),
 	url(r'^info/refresh/$',views.refreshInfo, name='refresh'),
 	url(r'^info/rebind/$',views.rebindIp, name='rebind'),
+	url(r'^control/$',views.adminControlPanel, name='adminControlPanel'),
 )
