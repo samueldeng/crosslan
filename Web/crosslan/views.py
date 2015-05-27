@@ -13,6 +13,23 @@ import json, traceback
 def index(request):
 	return render(request, 'crosslan/index.html')
 
+def newclUserWithUser(user):
+	port = utils.getNextPort()
+	if(port<0):
+		# Port Range Full
+		return HttpResponse(json.dumps({'status':5}), content_type="text/plain")
+	clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
+	clUser.save()
+	retry = 0
+	r = backend.newUser(port)
+	while (not r and retry < conf.RETRIES):
+		r = backend.newUser(port)
+		retry = retry + 1
+	if(retry == conf.RETRIES):
+		return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
+	backend.startProxy(port)
+	return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
+
 def signup(request):
 	try:
 		if (request.user.is_authenticated()):
@@ -27,16 +44,23 @@ def signup(request):
 				return HttpResponse(json.dumps({'status':1}), content_type="text/plain")
 			if (username=='' or password=='' or email=='' or redeem==''):
 				return HttpResponse(json.dumps({'status':1}), content_type="text/plain")
-			elif (auth.models.User.objects.filter(username=username).exists()):
-				return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
-			elif (not models.RedeemCode.objects.filter(code=redeem,status=models.RedeemCode.ACTIVE).exists()
-				and not models.RedeemCode.objects.filter(code=redeem,status=models.RedeemCode.SP).exists()):
+			if (auth.models.User.objects.filter(username=username).exists()):
+				user = User.objects.get(username=username)
+				if(models.CrossLanUser.objects.filter(user=user).exists()):
+					return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
+				else:
+					user = auth.authenticate(username=username, password=password)
+					if (user is not None and user.is_active):
+						return newclUserWithUser(user)
+					else:
+						return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
+			if (not models.RedeemCode.objects.filter(code=redeem).exists()):
 				# Add Current-IP
 				return HttpResponse(json.dumps({'status':3}), content_type="text/plain")
 			else:
 				code = models.RedeemCode.objects.get(code=redeem)
 				if (code.status == models.RedeemCode.INACTIVE):
-					return HttpResponse(json.dumps({'status':3}), content_type="text/plain")
+					return HttpResponse(json.dumps({'status':31}), content_type="text/plain")
 				elif (code.status == models.RedeemCode.USED):
 					return HttpResponse(json.dumps({'status':4}), content_type="text/plain")
 				else:
@@ -50,26 +74,7 @@ def signup(request):
 						code.recycle()
 						code.save()
 						return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
-					port = utils.getNextPort()
-					if(port<0):
-						# Port Range Full
-						return HttpResponse(json.dumps({'status':5}), content_type="text/plain")
-					clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
-					clUser.save()
-					retry = 0
-					r = backend.newUser(port)
-					while (r is not True and retry < conf.RETRIES):
-						r = backend.newUser(port)
-						retry = retry + 1
-					if(retry == conf.RETRIES):
-						# Check Backend Server
-						return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
-					retry = 0
-					r = backend.startProxy(port)
-					while (r is not True and retry < conf.RETRIES):
-						r = backend.newUser(port)
-						retry = retry + 1
-					return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
+					return newclUserWithUser(user)
 		else:
 			c = {}
 			c.update(csrf(request))
@@ -117,13 +122,7 @@ def info(request):
 	u = request.user.crosslanuser
 	pachost = conf.PAC_HOST + ':' + str(u.port) + '/pac'
 	host = u.host + ':' + str(u.port)
-	try:
-		status = backend.getProxyStatus(u.port)
-	except Exception:
-		print traceback.format_exc()
-		status = False
-	if(status is False):
-		status = 'Unknown'
+	status = backend.getProxyStatus(u.port)
 	balance = utils.getHuman(u.data)
 	bind = u.bind
 	clientIp = utils.getClientIp(request)
@@ -132,8 +131,6 @@ def info(request):
 	for ipOb in ipObjects:
 		ips.append(ipOb.ip)
 	if(clientIp not in ips):
-		print clientIp
-		print ips
 		newIp = models.BindingIP.objects.bind_ip(user=u, ip=clientIp)
 		newIp.save()
 		backend.setBindIp(u.port,ips)
@@ -159,15 +156,11 @@ def refreshInfo(request):
 	if(backend.updateData(user=u) is False):
 		balance = 'Unknown'
 	else:
-		balance = utils.getHuman(u.balance)
-	try:
-		backend.restartProxy(u.port)
+		balance = utils.getHuman(u.data)
+	status = backend.getProxyStatus(u.port)
+	if (status is not 'Running' and u.data > 0):
+		backend.startProxy(u.port)
 		status = backend.getProxyStatus(u.port)
-	except Exception:
-		print traceback.format_exc()
-		status = False
-	if(status is False):
-		status = 'Unknown'
 	c = {
 		 'host': host,
 		 'status': status,
@@ -196,21 +189,20 @@ def rebindIp(request):
 				existsIps.append(eIpOb.ip)
 				if(eIpOb.ip not in ips):
 					ipToRemove.append(eIpOb.ip)
-			print ipToRemove
 			for ip in ipToRemove:
 				models.BindingIP.objects.filter(user=u,ip=ip).delete()
-			print ips
 			for ip in ips:
 				if(ip not in existsIps):
 					i = models.BindingIP.objects.bind_ip(user=u, ip=ip)
 					i.save()
-			backend.setBindIp(u.port, ips)
+			if(not u.bind):
+				ips = []
+			backend.setBindIp(u.port,ips)
 			return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")
 		else:
 			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
 	except Exception, e:
-		print e.message
-		traceback.format_exc()
+		print traceback.format_exc()
 		return HttpResponse(json.dumps({"message":"Error"}), content_type="text/plain")
 
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('crosslan:signin'))
