@@ -1,4 +1,4 @@
-from crosslan import conf, models
+from crosslan import conf, models, utils
 import requests, json, traceback
 
 from django_cron import CronJobBase, Schedule, CronJobLog
@@ -145,14 +145,6 @@ def updateAllData():
 
 
 # Cron Classes
-class CronTester(CronJobBase):
-	RUN_EVERY_MINS = 1
-
-	schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-	code = 'crosslan.CronTester'
-
-	def do(self):
-		print self.code
 
 class UpdateDataCronJob(CronJobBase):
 	RUN_EVERY_MINS = 30
@@ -161,6 +153,14 @@ class UpdateDataCronJob(CronJobBase):
 	code = 'crosslan.UpdateDataCronJob'
 
 	def do(self):
-		allUser = models.CrossLanUser.objects.all()
-		for u in allUser:
-			updateData(user=u)
+		msg = ''
+		try:
+			allUser = models.CrossLanUser.objects.all()
+			for u in allUser:
+				data = updateData(user=u)
+				if(data is not False):
+					data = utils.getHuman(data)
+				msg = msg + u.user.username + ': ' + data + '\n'
+			return msg
+		except Exception, e:
+			return traceback.format_exc()

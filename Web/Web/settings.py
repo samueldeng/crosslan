@@ -55,7 +55,6 @@ MIDDLEWARE_CLASSES = (
 
 CRON_CLASSES = [
     "crosslan.backend.UpdateDataCronJob",
-    "crosslan.backend.CronTester",
 ]
 
 ROOT_URLCONF = 'Web.urls'

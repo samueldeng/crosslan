@@ -63,7 +63,7 @@ hr {
 }
 
 .disabled, .disabled:hover{
-	color: #ADADAD;
+	color: #ADADAD!important;
 	cursor: default;
 }
 

@@ -13,19 +13,6 @@ import json, traceback
 def index(request):
 	return render(request, 'crosslan/index.html')
 
-def newclUserWithUser(user):
-	clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
-	clUser.save()
-	retry = 0
-	r = backend.newUser(port)
-	while (not r and retry < conf.RETRIES):
-		r = backend.newUser(port)
-		retry = retry + 1
-	if(retry == conf.RETRIES):
-		return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
-	backend.startProxy(port)
-	return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
-
 def signup(request):
 	try:
 		if (request.user.is_authenticated()):
@@ -194,6 +181,27 @@ def refreshInfo(request):
 		 'balance': balance,
 		}
 	return HttpResponse(json.dumps(c), content_type="text/plain")
+
+@login_required(login_url=reverse_lazy('crosslan:signin'))
+def switchProxy(request):
+	try:
+		if(request.method == "POST"):
+			u = request.user.crosslanuser
+			proxyStatus = backend.getProxyStatus(u.port)
+			action = request.POST['action']
+			if(proxyStatus == 'Running' or action == 'stop'):
+				backend.stopProxy(u.port)
+				return HttpResponse(json.dumps({"status":backend.getProxyStatus(u.port), "code":0}), content_type="text/plain")
+			elif(proxyStatus == 'Stopped' or action == 'start'):
+				if(u.data <= 0 or backend.updateData(u) < 0):
+					return HttpResponse(json.dumps({"status":backend.getProxyStatus(u.port), "code":2}), content_type="text/plain")
+				backend.startProxy(u.port)
+				return HttpResponse(json.dumps({"status":backend.getProxyStatus(u.port), "code":0}), content_type="text/plain")
+			else:
+				return HttpResponse(json.dumps({"status":proxyStatus, "code":1}), content_type="text/plain")
+	except:
+		print traceback.format_exc()
+		return HttpResponse(json.dumps({"status":backend.getProxyStatus(u.port), "code":3}), content_type="text/plain")
 
 @login_required(login_url=reverse_lazy('crosslan:signin'))
 def rebindIp(request):

@@ -107,6 +107,7 @@ $(document).ready(function(){
 			info.toggleClass('col-md-offset-3');
 		}
 	});
+
 	$('#bindingSwitchWrapper').click(function(){
 		if($('#bindingSwitch').prop('checked')){
 			enableBindIp();
@@ -115,30 +116,80 @@ $(document).ready(function(){
 		}
 		bindingIpChangeEvent();
 	});
+
 	$('#bindingSwitchWrapper').find('div, span').click(function(){
 		$('#bindingSwitchWrapper').click();
 	});
 
 	$("a[href='#refresh']").click(function(e){
-		$(this).children('i').toggleClass('fa-refresh fa-spinner fa-pulse');
-		$.ajax({
-			url: 'refresh/',
-			type: 'GET',
-			success: function(data, textStatus, jqXHR){
-				data = $.parseJSON(data);
-				$('#proxyHostLabel').next().children('a').empty().append(data['host']);
-				$('#proxyStatusLabel').next().children('a').empty().append(data['status']);
-				$('#balanceLabel').next().children('a').empty().append(data['balance']);
-				$("a[href='#refresh']").children('i').toggleClass('fa-refresh fa-spinner fa-pulse');
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				alert("Error");
-				if (errorThrown == "FORBIDDEN") {
-					location.href = $('a#home').attr("href");
+		if($(this).hasClass('fa-spinner')){
+			e.preventDefault();
+		}else{
+			$(this).children('i').toggleClass('fa-refresh fa-spinner fa-pulse');
+			$.ajax({
+				url: 'refresh/',
+				type: 'GET',
+				success: function(data, textStatus, jqXHR){
+					data = $.parseJSON(data);
+					$('#proxyHostLabel').next().children('a').empty().append(data['host']);
+					$('#proxyStatusLabel').next().children('a').empty().append(data['status']);
+					$('#balanceLabel').next().children('a').empty().append(data['balance']);
+					$("a[href='#refresh']").children('i').toggleClass('fa-refresh fa-spinner fa-pulse');
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					alert("Error");
+					if (errorThrown == "FORBIDDEN") {
+						location.href = $('a#home').attr("href");
+					}
 				}
+			});
+			e.preventDefault();
+		}
+	});
+
+	$("a[href='#proxySwitcher']").click(function(e){
+		if($(this).hasClass('disabled')){
+			e.preventDefault();
+		}else{
+			$(this).addClass('disabled');
+			$(this).empty().append('Processing...');
+			var action = 'switch';
+			if($(this).text()=='Running'){
+				action = 'stop';
+			}else if($(this).text()=='Stopped'){
+				action = 'start';
 			}
-		});
-		e.preventDefault();
+			var data = $('#csrfForm').serializeArray();
+			data.push(newObjectFactory('action', action));
+			$.ajax({
+				url: 'switch/',
+				type: 'POST',
+				data: data,
+				success: function(data, textStatus, jqXHR){
+					data = $.parseJSON(data);
+					$("a[href='#proxySwitcher']").empty().append(data.status);
+					$("a[href='#proxySwitcher']").removeClass('disabled');
+					switch(data.code) {
+						case 1:
+						alert("Can't fetch proxy status, abort.");
+						break;
+						case 2:
+						alert("Your balance is low, can't start Proxy.");
+						break;
+						default:
+						alert('Report if you see this message. Error Code('+data.code + ')');
+						break;
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					alert("Error");
+					if (errorThrown == "FORBIDDEN") {
+						location.href = $('a#home').attr("href");
+					}
+				}
+			});
+			e.preventDefault();
+		}
 	});
 
 	$(':checkbox').on('change.radiocheck', function() {
