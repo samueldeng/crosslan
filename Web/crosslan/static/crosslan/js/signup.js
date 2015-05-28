@@ -29,7 +29,7 @@ $(document).ready(function(){
 					alert('Redeem Code used');
 					default:
 					$('#panel-cover').css('display', 'none');
-					alert('Oooops, something bad happened. Contact us, please. Error('+$.parseJSON(data).status+')');
+					alert('Signup failed. Report if you see this message. Error Code('+$.parseJSON(data).status + ')');
 					break;
 				}
 			},

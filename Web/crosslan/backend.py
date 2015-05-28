@@ -41,9 +41,9 @@ def operateProxy(port, action):
 		return False
 	else:
 		print '[FAILED]Backend.operateProxy():\n' \
-			+ '\tUrl: %s\n' \
-			+ '\tAction: %s\n' \
-			+ '\tJSON: %s\n' %(url, action, r.json())
+			+ '\tUrl: %s\n' %url \
+			+ '\tAction: %s\n' %action \
+			+ '\tJSON: %s\n' %r.json()
 		return False
 
 # Here Begins Functions Communicate with Backend
@@ -58,8 +58,8 @@ def newUser(port):
 		return False
 	else:
 		print '[FAILED]Backend.newUser():\n' \
-			+ '\tUrl: %s\n' \
-			+ '\tJSON: %s\n' %(url, r.json())
+			+ '\tUrl: %s\n' %url \
+			+ '\tJSON: %s\n' %r.json()
 		return False
 
 def startProxy(port):
@@ -88,8 +88,8 @@ def getProxyStatus(port):
 		return 'Unknown'
 	else:
 		print '[FAILED]Backend.getProxyStatus():\n'  \
-			+ '\tUrl: %s\n'  \
-			+ '\tJSON: %s\n' %(url, r.json())
+			+ '\tUrl: %s\n'  %url \
+			+ '\tJSON: %s\n' %r.json()
 		return 'Unknown'
 
 def setBindIp(port, ips):
@@ -106,9 +106,9 @@ def setBindIp(port, ips):
 		return False
 	else:
 		print '[FAILED]Backend.setBindIp():\n'  \
-			+ '\tUrl: %s\n'  \
-			+ '\tIPs: %s\n'  \
-			+ '\tJSON: %s\n' %(url, ips, r.json())
+			+ '\tUrl: %s\n'  %url \
+			+ '\tIPs: %s\n'  %ips \
+			+ '\tJSON: %s\n' %r.json()
 		return False
 
 def getDataUsage(port):
@@ -121,8 +121,8 @@ def getDataUsage(port):
 		return False
 	else:
 		print '[FAILED]Backend.getDataUsage():\n'  \
-			+ '\tUrl: %s\n' \
-			+ '\tJSON: %s\n' %(url, r.json())
+			+ '\tUrl: %s\n' %url \
+			+ '\tJSON: %s\n' %r.json()
 		return False
 
 def updateData(user):

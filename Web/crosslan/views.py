@@ -14,10 +14,6 @@ def index(request):
 	return render(request, 'crosslan/index.html')
 
 def newclUserWithUser(user):
-	port = utils.getNextPort()
-	if(port<0):
-		# Port Range Full
-		return HttpResponse(json.dumps({'status':5}), content_type="text/plain")
 	clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
 	clUser.save()
 	retry = 0
@@ -44,6 +40,10 @@ def signup(request):
 				return HttpResponse(json.dumps({'status':1}), content_type="text/plain")
 			if (username=='' or password=='' or email=='' or redeem==''):
 				return HttpResponse(json.dumps({'status':1}), content_type="text/plain")
+			port = utils.getNextPort()
+			if(port<0):
+				# Port Range Full
+				return HttpResponse(json.dumps({'status':5}), content_type="text/plain")
 			if (auth.models.User.objects.filter(username=username).exists()):
 				user = User.objects.get(username=username)
 				if(models.CrossLanUser.objects.filter(user=user).exists()):
@@ -51,7 +51,18 @@ def signup(request):
 				else:
 					user = auth.authenticate(username=username, password=password)
 					if (user is not None and user.is_active):
-						return newclUserWithUser(user)
+						clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
+						clUser.save()
+						retry = 0
+						r = backend.newUser(port)
+						while (not r and retry < conf.RETRIES):
+							r = backend.newUser(port)
+							retry = retry + 1
+						if(retry == conf.RETRIES):
+							clUser.delete()
+							return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
+						backend.startProxy(port)
+						return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
 					else:
 						return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
 			if (not models.RedeemCode.objects.filter(code=redeem).exists()):
@@ -60,7 +71,7 @@ def signup(request):
 			else:
 				code = models.RedeemCode.objects.get(code=redeem)
 				if (code.status == models.RedeemCode.INACTIVE):
-					return HttpResponse(json.dumps({'status':31}), content_type="text/plain")
+					return HttpResponse(json.dumps({'status':3}), content_type="text/plain")
 				elif (code.status == models.RedeemCode.USED):
 					return HttpResponse(json.dumps({'status':4}), content_type="text/plain")
 				else:
@@ -74,7 +85,19 @@ def signup(request):
 						code.recycle()
 						code.save()
 						return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
-					return newclUserWithUser(user)
+					clUser = models.CrossLanUser.objects.create_user(user=user, host=conf.PROXY_HOST, port = port);
+					clUser.save()
+					retry = 0
+					r = backend.newUser(port)
+					while (not r and retry < conf.RETRIES):
+						r = backend.newUser(port)
+						retry = retry + 1
+					if(retry == conf.RETRIES):
+						code.recycle()
+						user.delete()
+						return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
+					backend.startProxy(port)
+					return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
 		else:
 			c = {}
 			c.update(csrf(request))
@@ -119,7 +142,11 @@ def signout(request):
 from django.contrib.auth.decorators import login_required, user_passes_test
 @login_required(login_url=reverse_lazy('crosslan:signin'))
 def info(request):
-	u = request.user.crosslanuser
+	try:
+		u = request.user.crosslanuser
+	except:
+		print traceback.format_exc()
+		return signout()
 	pachost = conf.PAC_HOST + ':' + str(u.port) + '/pac'
 	host = u.host + ':' + str(u.port)
 	status = backend.getProxyStatus(u.port)
