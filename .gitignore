@@ -10,7 +10,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -60,3 +59,5 @@ target/
 .idea/*
 
 bin/*
+# SQLite3 DB
+*.sqlite3

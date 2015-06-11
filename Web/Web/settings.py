@@ -53,6 +53,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+CRON_CLASSES = [
+    "crosslan.backend.UpdateDataCronJob",
+    "crosslan.backend.CronTester",
+]
+
 ROOT_URLCONF = 'Web.urls'
 
 TEMPLATES = [
@@ -90,7 +95,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Chongqing'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

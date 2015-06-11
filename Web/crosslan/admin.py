@@ -1,5 +1,5 @@
 from django.contrib import admin
-from crosslan.models import CrossLanUser, BindingIP
+from crosslan.models import CrossLanUser, BindingIP, RedeemCode
 
 # Register your models here.
 class BindingIPInline(admin.TabularInline):
@@ -15,4 +15,11 @@ class UserAdmin(admin.ModelAdmin):
 	]
 	inlines = [BindingIPInline]
 
+class RedeemAdmin(admin.ModelAdmin):
+	fieldsets = [
+		('Code', {'fields' : ['code']}),
+		('Status', {'fields' : ['status']}),
+	]
+
 admin.site.register(CrossLanUser, UserAdmin)
+admin.site.register(RedeemCode, RedeemAdmin)

@@ -1,0 +1,132 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
+	display: block;
+}
+a,a:hover{
+	text-decoration: none;
+}
+body{
+	font-family: "Microsoft YaHei"
+	font-size: 16px;
+}
+#header{
+	border-top: #53bf6b 4px solid;
+	border-bottom: #eaeaea 1px solid;
+	width: 100%;
+	height: 65px;
+	background: rgba(255,255,255,0.8);
+	z-index: 777;
+	position: fixed;
+}
+#footer{
+	width: 100%;
+	background: rgba(75,75,75,0.8);
+	bottom: 0;
+	position: fixed;
+}
+#inner-header,#inner-footer{
+	width: 960px;
+	margin: 0 auto;
+}
+#logo{
+	float: left;
+	display: block
+}
+#mainnav{
+	float: left;
+}
+#subnav{
+	padding: 17px 0 16px 0;
+	float: right;
+	border-left: #eaeaea 1px solid;
+	border-right: #eaeaea 1px solid;
+}
+#topSearch{
+	background-image: url(../img/search.png);
+	background-position: 180px 5px;
+	background-repeat: no-repeat;
+}
+#topSearch>form>input[type=text]{
+	color: #999;
+	font-size: 14px;
+	height: 32px;
+	width: 200px;
+	border: 0;
+	padding: 0 0 0 14px;
+	background-color: transparent;
+	margin: 0;
+}
+#topSearch>form>input[type=text]:focus{
+	outline: none;
+}
+#wrapper{
+	margin: 0 auto;
+	padding: 0;
+	overflow: auto;
+	width: 960px;
+}
+#mainbody{
+	margin: 110px 10px 0 10px;
+	width: 940;
+}
+
+#login {
+	color: #CCC;
+	font: 13px Monaco;
+}
+#login:hover {
+	color: #DDD;
+}
+
+#logout {
+	color: #53bf6b;
+	font: 13px Monaco;
+}
+
+#logout:hover {
+	color: #CCC;
+}
+
+.meta {
+	font-size: 12px;
+	color: #CCC;
+	margin: 5px auto;
+	text-align: center;
+	cursor: default;
+}
+.meta a {
+	color: #eee;
+}
+.meta a:hover {
+	color: #53bf6b;
+}
+@media(max-width: 980px){
+	#inner-header,#inner-footer,#wrapper{
+		width: 100%;
+	}
+}
+
+div.shadow-block {
+	box-shadow: rgb(171, 171, 171) 1px 1px 2px 1px;
+}
+
+.round {
+	-moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 60px;
+}
+
+div.panel {
+	position: relative;
+	background: #fff;
+	margin: 50px auto;
+	width: 480px;
+	padding: 20px 30px;
+	border-radius: 5px;
+}

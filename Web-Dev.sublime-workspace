@@ -1,0 +1,1136 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ba",
+				"backend"
+			],
+			[
+				"get",
+				"getProxyStatus〔function〕"
+			],
+			[
+				"new",
+				"newclUserWithUser〔function〕"
+			],
+			[
+				"Cron",
+				"CronJobLog"
+			],
+			[
+				"fo",
+				"focus〔function〕"
+			],
+			[
+				"del",
+				"deltaData〔variable〕"
+			],
+			[
+				"run",
+				"run_every_mins"
+			],
+			[
+				"stop",
+				"stopProxy〔function〕"
+			],
+			[
+				"al",
+				"allUser"
+			],
+			[
+				"par",
+				"parts〔variable〕"
+			],
+			[
+				"input",
+				"inputValidation"
+			],
+			[
+				"disa",
+				"disable"
+			],
+			[
+				"en",
+				"enable"
+			],
+			[
+				"ip",
+				"ipToRemove"
+			],
+			[
+				"ex",
+				"existsIps"
+			],
+			[
+				"s",
+				"status〔variable〕"
+			],
+			[
+				"last",
+				"lastIp"
+			],
+			[
+				"bin",
+				"bindingIpChangeDone"
+			],
+			[
+				"enab",
+				"enableBindIp"
+			],
+			[
+				"pre",
+				"preventDefault"
+			],
+			[
+				"dis",
+				"disableBindIp"
+			],
+			[
+				"bind",
+				"bindIpObjects"
+			],
+			[
+				"displa",
+				"display: 〔property〕"
+			],
+			[
+				"Bind",
+				"BindingIP"
+			],
+			[
+				"erro",
+				"errorThrown"
+			],
+			[
+				"crosslan",
+				"crosslanuser"
+			],
+			[
+				"che",
+				"checked"
+			],
+			[
+				"labels",
+				"labels"
+			],
+			[
+				"to",
+				"toggleClass〔function〕"
+			],
+			[
+				"addI",
+				"a#addIp"
+			],
+			[
+				"a",
+				"a	Tag"
+			],
+			[
+				"first",
+				"first-child〔function〕"
+			],
+			[
+				"disable",
+				"disableBindIp"
+			],
+			[
+				"resta",
+				"restartProxy〔function〕"
+			],
+			[
+				"start",
+				"startProxy〔function〕"
+			],
+			[
+				"add",
+				"addIpBox"
+			],
+			[
+				"child",
+				"children〔function〕"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"in",
+				"inherit〔value〕"
+			],
+			[
+				"st",
+				"step〔variable〕"
+			],
+			[
+				"ge",
+				"getProxyStatus〔function〕"
+			],
+			[
+				"ha",
+				"hasClass〔function〕"
+			],
+			[
+				"o",
+				"offset〔function〕"
+			],
+			[
+				"p",
+				"profile"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"list-s",
+				"list-style"
+			],
+			[
+				"alig",
+				"text-align: 〔property〕"
+			],
+			[
+				"op",
+				"operateProxy〔function〕"
+			],
+			[
+				"sta",
+				"status_code"
+			],
+			[
+				"log",
+				"logout〔function〕"
+			],
+			[
+				"sign",
+				"signout"
+			],
+			[
+				"set",
+				"set_cookie〔function〕"
+			],
+			[
+				"Htt",
+				"HttpResponseRedirect"
+			],
+			[
+				"Red",
+				"RedeemCode"
+			],
+			[
+				"objec",
+				"objects"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"focu",
+				"focusin〔function〕"
+			],
+			[
+				"cla",
+				"toggleClass〔function〕"
+			],
+			[
+				"mouse",
+				"mouseenter〔function〕"
+			],
+			[
+				"mari",
+				"margin-left"
+			],
+			[
+				"fou",
+				"focusout"
+			],
+			[
+				"cross",
+				"crosslan:index"
+			],
+			[
+				"Http",
+				"HttpResponseRedirect〔module〕"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"HttpRes",
+				"HttpResponseRedirect〔class〕"
+			],
+			[
+				"User",
+				"UserAdmin〔class〕"
+			],
+			[
+				"Bin",
+				"BindingIP〔module〕"
+			],
+			[
+				"C",
+				"CrossLanUser"
+			],
+			[
+				"l",
+				"login"
+			],
+			[
+				"pl",
+				"plot"
+			],
+			[
+				"short",
+				"shortUrl"
+			],
+			[
+				"shor",
+				"shortUrl"
+			],
+			[
+				"or",
+				"originUrl〔argument〕"
+			],
+			[
+				"min",
+				"mixKey〔argument〕"
+			],
+			[
+				"focus",
+				"focusout〔function〕"
+			],
+			[
+				"text",
+				"textarea	Tag"
+			],
+			[
+				"u",
+				"shortUrl〔variable〕"
+			],
+			[
+				"max",
+				"max_length"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"FOnt",
+				"font-family"
+			],
+			[
+				"is",
+				"is_authenticated"
+			],
+			[
+				"posito",
+				"position"
+			],
+			[
+				"sy",
+				"style"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"bac",
+				"background-image"
+			],
+			[
+				"HttpRe",
+				"HttpResponseRedirect〔module〕"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"id",
+				"id=〔attribute〕"
+			],
+			[
+				"style",
+				"stylesheet"
+			],
+			[
+				"sc",
+				"script"
+			],
+			[
+				"n",
+				"pointer"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"sub",
+				"submit〔function〕"
+			],
+			[
+				"reder",
+				"render_to_response〔module〕"
+			],
+			[
+				"render",
+				"render_to_response〔function〕"
+			],
+			[
+				"dump",
+				"dumps〔function〕"
+			],
+			[
+				"se",
+				"serialize〔function〕"
+			],
+			[
+				"aut",
+				"authenticate〔module〕"
+			],
+			[
+				"ac",
+				"action	Attr"
+			],
+			[
+				"for",
+				"for=〔attribute〕"
+			],
+			[
+				"t",
+				"type	Attr"
+			],
+			[
+				"time",
+				"time_delta"
+			],
+			[
+				"texli",
+				"texlive"
+			],
+			[
+				"File",
+				"FileOutputFormat"
+			],
+			[
+				"Word",
+				"WordCountReducer"
+			],
+			[
+				"word",
+				"WordCountMapper"
+			],
+			[
+				"INter",
+				"InterruptedException"
+			],
+			[
+				"th",
+				"throws"
+			],
+			[
+				"In",
+				"IntWritable"
+			],
+			[
+				"total",
+				"total_time"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Web/crosslan/backend.py",
+			"settings":
+			{
+				"buffer_size": 3848,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "mark",
+		"selected_items":
+		[
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"comme",
+				"Toggle Comment"
+			],
+			[
+				"diff",
+				"FileDiffs: Menu"
+			],
+			[
+				"markd",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"j",
+				"Format: Javascript"
+			],
+			[
+				"preview",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"mard",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"markdown",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"file",
+				"FileDiffs: Menu"
+			],
+			[
+				"filedi",
+				"FileDiffs: Menu"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"sublime",
+				"SublimeCodeIntel: Reset"
+			],
+			[
+				"ma",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"mar",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"inden",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"Java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"",
+				"Package Control: Enable Package"
+			],
+			[
+				"form",
+				"Format: Javascript"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"pre",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"previen",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"previe",
+				"Markdown Preview: Python Markdown: Preview in Browser"
+			],
+			[
+				"previ",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"file_diff_menu",
+			"file_diff",
+			"file_diff_menu",
+			"js_format",
+			"import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/static",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/static/crosslan",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/static/crosslan/css",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/static/crosslan/js",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/templates",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/templates/crosslan",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/Web"
+	],
+	"file_history":
+	[
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dist/Web/Web/settings.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/Web/settings.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/backend.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/views.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/conf.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dev/Web/crosslan/templates/crosslan/info.html",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dist/Web/crosslan/backend.py",
+		"/E/Someone Documents/Source Code/Python/CrossLAN-Dist/Web/crosslan/views.py",
+		"/E/Someone Documents/Source Code/Python/crosslan/.gitignore",
+		"/E/Someone Documents/Source Code/Python/crosslan/Web/Web/settings.py",
+		"/E/Someone Documents/Source Code/CrossLan/.gitignore",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/info.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/signin.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/radiocheck.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/info.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/signup.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/signin.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/signup.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/signin.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/base.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/backend.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/models.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/views.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/signup.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/utils.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/admin.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/info.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/base.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/base.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/Web/settings.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/conf.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/urls.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/dist/js/jquery.switchButton.js",
+		"/E/Someone Documents/Source Code/Site/mysite/bloglite/backend.py",
+		"/E/Someone Documents/Source Code/Site/mysite/polls/views.py",
+		"/D/Program Files/Sublime Text 3/Data/Packages/Alignment/Base File.sublime-settings",
+		"/D/Program Files/Sublime Text 3/Data/Packages/User/Base File.sublime-settings",
+		"/D/Program Files/Sublime Text 3/Data/Packages/Alignment/Default (Windows).sublime-keymap",
+		"/D/Program Files/Sublime Text 3/Data/Packages/User/Default (Windows).sublime-keymap",
+		"/D/Program Files/Sublime Text 3/Data/Packages/User/Python.sublime-settings",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/index.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/index.html",
+		"/C/Users/Emmet/AppData/Local/Temp/BNZ.555ef9201da6e29/Gruntfile.js",
+		"/E/Downloads/Flat-UI-master/docs/template.html",
+		"/E/Downloads/Flat-UI-master/view-source_127.0.0.1_8080.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/view-source_127.0.0.1_8080.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/__init__.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/process.py",
+		"/E/Someone Documents/Source Code/Site/mysite/polls/models.py",
+		"/E/Downloads/Flat-UI-master/docs/examples/forms.html",
+		"/E/Someone Documents/Source Code/Python/Alan&Emmet/Thinker/apps/templates/apps/url.html",
+		"/E/Someone Documents/Source Code/EmmetZC.github.io/index.html",
+		"/E/Someone Documents/Source Code/Site/mysite/bloglite/templates/bloglite/base.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/base2.css",
+		"/E/Someone Documents/Source Code/CrossLan/introduction_page/.editorconfig",
+		"/E/Someone Documents/Source Code/CrossLan/introduction_page/index.html",
+		"/E/Someone Documents/Source Code/CrossLan/introduction_page/js/.jscs.json",
+		"/E/Someone Documents/Source Code/Site/mysite/mysite/urls.py",
+		"/E/Someone Documents/Source Code/Site/mysite/bloglite/views.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/register.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/css/login.css",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/js/login.js",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/login.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/register.html",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/img/Flat/indeterminate.gif",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/static/crosslan/img/Flat/imagebrowser.png",
+		"/E/Someone Documents/Source Code/Site/mysite/bloglite/models.py",
+		"/E/Someone Documents/Source Code/Site/mysite/mysite/settings.py",
+		"/E/Someone Documents/Source Code/Site/mysite/templates/admin/base_site.html",
+		"/E/Someone Documents/Source Code/Site/mysite/polls/admin.py",
+		"/E/Someone Documents/Source Code/Site/mysite/bloglite/admin.py",
+		"/E/Someone Documents/Source Code/CrossLan/Web/Web/urls.py",
+		"/D/Program Files/Sublime Text 3/Data/Packages/User/Preferences.sublime-settings",
+		"/E/Someone Documents/Source Code/CrossLan/Web/crosslan/templates/crosslan/url.html",
+		"/E/Someone Documents/Source Code/Visual Studio 2013/LeetCode OJ/TSP/draw.py",
+		"/E/Someone Documents/Source Code/Visual Studio 2013/LeetCode OJ/TSP/Output.txt",
+		"/D/Tools/Batch/ls.bat",
+		"/D/Tools/ShadowSocks/SyncWithLocal.bat",
+		"/D/Tools/ShadowSocks/gui-config.json",
+		"/E/Downloads/Games/Assassins.Creed.Chronicles.China-CODEX/codex-assassins.creed.chronicles.china.iso",
+		"/D/Program Files (x86)/ShadowSocks/gui-config.json",
+		"/E/Working Directory/How to Install Hadoop on Linux.md",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/zuozhu/scripts/prefabs/hat_bee_bw.lua",
+		"/D/Entertainment/Steam/steamapps/common/Don't Starve Together Beta/mods/workshop-420492456/scripts/prefabs/hat_bee_bw.lua",
+		"/D/Entertainment/Steam/steamapps/common/Don't Starve Together Beta/mods/workshop-420492456/scripts/prefabs/sasuke.lua",
+		"/E/Someone Documents/Source Code/Visual Studio 2013/HighPrecisionCalc/HighPrecisionCalc/InfiPrecisionDouble.h",
+		"/E/Someone Documents/Source Code/C++/HighPrecisionCalculator/TLargeFloat.h",
+		"/D/Tools/Batch/IPToggle.bat",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/data/scripts/prefabs/amulet.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/workshop-300918311/modmain.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/data/scripts/prefabs/axe.lua",
+		"/F/hadoop-eclipse.tar.gz",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/zuozhu/scripts/prefabs/wand.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/workshop-300918311/modinfo.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/workshop-300918311/scripts/widgets/badge.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/workshop-300918311/scripts/components/kramped.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/data/scripts/prefabs/blowdart.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/data/scripts/prefabs/staff.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/data/scripts/prefabs/magicprototyper.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/zuozhu/modinfo.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/zuozhu/scripts/prefabs/sasuke.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/zuozhu/scripts/speech_sasuke.lua",
+		"/D/Entertainment/Steam/steamapps/common/dont_starve/mods/modsettings.lua",
+		"/D/Tools/Batch/off.bat",
+		"/D/Tools/Batch/autoconf.bat",
+		"/D/MinGW/bin/autoconf.bat",
+		"/D/MinGW/bin/autoreconf",
+		"/E/Working Directory/Hadoop/hadoop/pom.xml",
+		"/E/Working Directory/Hadoop/hadoop-1.2.0/build.xml",
+		"/E/Working Directory/Hadoop/hadoop-1.2.0/.eclipse.templates/README.txt",
+		"/E/Working Directory/Hadoop/hadoop-1.2.0/README.txt",
+		"/D/Program Files (x86)/JetBrains/IntelliJ IDEA Community Edition 14.1.1/plugins/maven/lib/maven3/bin/mvn.bat",
+		"/D/Program Files (x86)/JetBrains/IntelliJ IDEA Community Edition 14.1.1/plugins/maven/lib/maven3/bin/mvn",
+		"/E/Interpreter.js",
+		"/D/Program Files/Android/Android Studio/bin/studio.exe.vmoptions",
+		"/E/Working Directory/Hadoop/hadoop-1.2.0/ivy.xml",
+		"/C/Users/Emmet Jang/.deliverycenter.system",
+		"/C/Users/Emmet Jang/.myeclipse.properties",
+		"/E/Someone Documents/Source Code/C++/HighPrecisionCalculator/TLargeFloat.cpp",
+		"/C/Users/Emmet Jang/Desktop/MyEclipse2015Stable1.0Crack/keygen/crack.bat",
+		"/C/Users/Emmet Jang/Desktop/VSTOInstaller.exe.config",
+		"/C/Users/Emmet Jang/Desktop/VSTOInstaller.exe - Copy.config",
+		"/C/Program Files (x86)/Common Files/Microsoft Shared/VSTO/10.0/VSTOInstaller.exe.config",
+		"/D/Program Files/NetBeans 8.0.2/etc/netbeans.conf",
+		"/D/Program Files/Sublime Text 3/Data/Packages/SublimeCodeIntel/Default (Windows).sublime-keymap",
+		"/E/Someone Documents/Source Code/Visual Studio 2013/LeetCode OJ/Count and Say/Source.cpp",
+		"/E/Someone Documents/Source Code/Visual Studio 2013/CppFeatureTest/FileStream/Source.cpp",
+		"/E/Music/CloudMusic/hosts"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<open folders>",
+			"<open files>",
+			"<open folders>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"print",
+			"getDatausage",
+			"[]",
+			".balance",
+			"u.data",
+			"u.balance",
+			"print",
+			"updateData",
+			"getDataUsage",
+			"getProxyStatus",
+			"setBindIp",
+			"restartProxy",
+			"stopProxy",
+			"startProxy",
+			"newUser",
+			"getProxyStatus",
+			"debug",
+			"traceback.format_exc()",
+			"/dist",
+			"bindingIpChangeEvent",
+			"$(':checkbox')",
+			":checkbox",
+			"checkbox",
+			"radiocheck",
+			"$(':checkbox')",
+			"alert",
+			"data",
+			"bindingIpEventTrigger",
+			"checkbox",
+			".disabled",
+			"#addIp",
+			"disabled",
+			"getCheckedIp",
+			"getCheckedBindIp",
+			"getChecked",
+			"getCheckedbindIp",
+			"getChecked",
+			"bindingSubmitBox",
+			"BindingIpEventTrigger",
+			"\"",
+			"ACTIVE",
+			"\"",
+			".block-content {\n	height:100px;\n}",
+			"assets",
+			"static/",
+			"/static",
+			"url =",
+			"url = ",
+			"redeem",
+			"label",
+			"40px",
+			"required",
+			"formSignin",
+			"id",
+			"id_password",
+			"register",
+			"class",
+			"resource",
+			"register",
+			"logout",
+			"login",
+			"signin",
+			"register",
+			"login",
+			"pan",
+			"panel",
+			"reder",
+			"auth",
+			"bloglite",
+			"TEMPLATES",
+			"templates",
+			"python",
+			"NECK",
+			"amulet",
+			"operator",
+			"operator +=",
+			"operator.*-=",
+			"operator.-=",
+			"operator-=",
+			"operator  -=",
+			"operator -=",
+			"operator-=",
+			"-=",
+			"operator -=",
+			"operator-=",
+			"-=",
+			"Abs",
+			"Chs",
+			"chs",
+			"TLargeFloatException",
+			":",
+			"tv",
+			"shortURL",
+			"bloglite",
+			"static",
+			"sUrls",
+			"[A-Z]",
+			":\n",
+			"button",
+			"k-b",
+			"textbox",
+			"kendo-text",
+			"text",
+			"width",
+			"min",
+			"cursor",
+			"driver",
+			"drivers",
+			"136.90",
+			"indent",
+			"ctrl+shift+d",
+			"IP地址快速切换",
+			"压缩",
+			"解压",
+			"打包",
+			"：",
+			"解包：",
+			"———————————————",
+			".",
+			"\"Font\"=\"Courier New\"",
+			"\"Font\"",
+			"\"Colour0\"=\"187,187,187\"\n\"Colour1\"=\"255,255,255\"\n\"Colour2\"=\"0,0,0\"\n\"Colour3\"=\"85,85,85\"\n\"Colour4\"=\"0,0,0\"\n\"Colour5\"=\"0,255,0\"\n\"Colour6\"=\"0,0,0\"\n\"Colour7\"=\"85,85,85\"\n\"Colour8\"=\"187,0,0\"\n\"Colour9\"=\"255,85,85\"\n\"Colour10\"=\"0,187,0\"\n\"Colour11\"=\"85,255,85\"\n\"Colour12\"=\"187,187,0\"\n\"Colour13\"=\"255,255,85\"\n\"Colour14\"=\"0,0,187\"\n\"Colour15\"=\"85,85,255\"\n\"Colour16\"=\"187,0,187\"\n\"Colour17\"=\"255,85,255\"\n\"Colour18\"=\"0,187,187\"\n\"Colour19\"=\"85,255,255\"\n\"Colour20\"=\"187,187,187\"\n\"Colour21\"=\"255,255,255\"",
+			".footnote-button",
+			";",
+			";$",
+			"$",
+			"}",
+			"ib_cm_event"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\"checkbox biglabel\" for=\"boxClientIp\"><input type=\"checkbox\" data-toggle=\"checkbox\" value=\"0\" id=\"boxClientIp\" ",
+			"'%1'",
+			"'[A-Z]'",
+			"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z",
+			"Unzip: ",
+			"\"Font\"=\"Menlo\"",
+			"\"Colour0\"=\"217,230,242\"\n\"Colour1\"=\"217,230,242\"\n\"Colour2\"=\"14,27,48\"\n\"Colour3\"=\"14,27,48\"\n\"Colour4\"=\"14,27,48\"\n\"Colour5\"=\"217,230,242\"\n\"Colour6\"=\"0,0,0\"\n\"Colour7\"=\"46,46,46\"\n\"Colour8\"=\"215,49,64\"\n\"Colour9\"=\"223,100,112\"\n\"Colour10\"=\"80,194,54\"\n\"Colour11\"=\"128,202,105\"\n\"Colour12\"=\"215,184,54\"\n\"Colour13\"=\"223,194,105\"\n\"Colour14\"=\"58,91,199\"\n\"Colour15\"=\"97,127,204\"\n\"Colour16\"=\"206,49,199\"\n\"Colour17\"=\"216,100,207\"\n\"Colour18\"=\"71,194,189\"\n\"Colour19\"=\"122,202,200\"\n\"Colour20\"=\"211,211,211\"\n\"Colour21\"=\"255,255,255\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Web/crosslan/backend.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3848,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3848,
+								3848
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_complete": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
+							],
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1731.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 32.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 106.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.markdown":
+	{
+		"height": 106.0
+	},
+	"pinned_build_system": "",
+	"project": "Web-Dev.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 197.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
