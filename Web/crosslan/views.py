@@ -172,9 +172,6 @@ def refreshInfo(request):
 	else:
 		balance = utils.getHuman(u.data)
 	status = backend.getProxyStatus(u.port)
-	if (status is not 'Running' and u.data > 0):
-		backend.startProxy(u.port)
-		status = backend.getProxyStatus(u.port)
 	c = {
 		 'host': host,
 		 'status': status,

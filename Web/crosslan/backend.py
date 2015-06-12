@@ -43,7 +43,7 @@ def operateProxy(port, action):
 		print '[FAILED]Backend.operateProxy():\n' \
 			+ '\tUrl: %s\n' %url \
 			+ '\tAction: %s\n' %action \
-			+ '\tJSON: %s\n' %r.json()
+			+ '\tStatus Code: %s\n' %r.status_code
 		return False
 
 # Here Begins Functions Communicate with Backend
@@ -59,7 +59,7 @@ def newUser(port):
 	else:
 		print '[FAILED]Backend.newUser():\n' \
 			+ '\tUrl: %s\n' %url \
-			+ '\tJSON: %s\n' %r.json()
+			+ '\tStatus Code: %s\n' %r.status_code
 		return False
 
 def startProxy(port):
@@ -69,10 +69,6 @@ def stopProxy(port):
 	return operateProxy(port, 'stop')
 
 def restartProxy(port):
-	if(models.CrossLanUser.objects.get(port=port).data <= 0):
-		return False
-	if(getProxyStatus(port) == 'Stopped'):
-		return startProxy(port)
 	return operateProxy(port, 'restart')
 
 def getProxyStatus(port):
@@ -89,7 +85,7 @@ def getProxyStatus(port):
 	else:
 		print '[FAILED]Backend.getProxyStatus():\n'  \
 			+ '\tUrl: %s\n'  %url \
-			+ '\tJSON: %s\n' %r.json()
+			+ '\tStatus Code: %s\n' %r.status_code
 		return 'Unknown'
 
 def setBindIp(port, ips):
@@ -108,7 +104,7 @@ def setBindIp(port, ips):
 		print '[FAILED]Backend.setBindIp():\n'  \
 			+ '\tUrl: %s\n'  %url \
 			+ '\tIPs: %s\n'  %ips \
-			+ '\tJSON: %s\n' %r.json()
+			+ '\tStatus Code: %s\n' %r.status_code
 		return False
 
 def getDataUsage(port):
@@ -122,7 +118,7 @@ def getDataUsage(port):
 	else:
 		print '[FAILED]Backend.getDataUsage():\n'  \
 			+ '\tUrl: %s\n' %url \
-			+ '\tJSON: %s\n' %r.json()
+			+ '\tStatus Code: %s\n' %r.status_code
 		return False
 
 def updateData(user):
@@ -157,10 +153,16 @@ class UpdateDataCronJob(CronJobBase):
 		try:
 			allUser = models.CrossLanUser.objects.all()
 			for u in allUser:
-				data = updateData(user=u)
-				if(data is not False):
-					data = utils.getHuman(data)
-				msg = msg + u.user.username + ': ' + data + '\n'
+				dataDelta = getDataUsage(u.port)
+				if(dataDelta is not False):
+					u.data = u.data - dataDelta
+					u.save()
+					if(u.data <= 0):
+						stopProxy(u.port)
+					dataDelta = utils.getHuman(dataDelta)
+				else:
+					dataDelta = 'Update Failed.'
+				msg = msg + u.user.username + ': ' + dataDelta + '\n'
 			return msg
 		except Exception, e:
 			return traceback.format_exc()

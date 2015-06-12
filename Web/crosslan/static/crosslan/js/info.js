@@ -170,6 +170,8 @@ $(document).ready(function(){
 					$("a[href='#proxySwitcher']").empty().append(data.status);
 					$("a[href='#proxySwitcher']").removeClass('disabled');
 					switch(data.code) {
+						case 0:
+						break;
 						case 1:
 						alert("Can't fetch proxy status, abort.");
 						break;
