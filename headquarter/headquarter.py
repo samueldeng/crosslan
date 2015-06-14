@@ -12,6 +12,8 @@ from flask.ext.restful import abort, Api, Resource
 import iptc
 import signal
 
+import rcparser
+import iptman
 
 headquarter_app = Flask(__name__)
 headquarter_controller = Api(headquarter_app)
@@ -32,6 +34,7 @@ du_log.addHandler(fh)
 
 # Proxy Server List [str]
 ss_lists = []
+cl_container_home = os.environ["CL_CONTAINERS_HOME"]
 
 # Cow Process and Port Mapping. int{port}--->Process
 cow_process = {}
@@ -46,50 +49,31 @@ class CrossLanContainers(Resource):
             log.debug("CrossLanContainers.POST")
             log.debug("ARGS:  " + str(port) + " type: " + str(type(port)))
 
+            iptables_manager = iptman.IptMan()
+            conf_parser = rcparser.ConfParser()
+
             # Add rc File into User's Home.
-            cl_container_home = os.environ["CL_CONTAINERS_HOME"]
             filename = cl_container_home + "/cl_container_" + str(port) + "/rc"
 
             if os.path.exists(filename):
                 os.remove(filename)
+            iptables_manager.delete_rule(port)
 
-            filter_table = iptc.Table(iptc.Table.FILTER)
-
-            output_chain = iptc.Chain(filter_table, "OUTPUT")
-            rule_del = None
-            for rule in output_chain.rules:
-                sport = str(rule.matches[0].parameters["sport"])
-                if sport == str(port):
-                    rule_del = rule
-                    break
-
-            if rule_del is not None:
-                output_chain.delete_rule(rule_del)
-
-            f = open(filename, 'a')
-            f.write("listen = http://202.117.15.79:" + str(port) + "\n")
-            f.write("loadBalance = hash\n")
+            # New Configuration File for this User.
+            rc_conf = [
+                ('listen', ['http://202.117.15.79:' + str(port)]),
+                ('loadBalance', ['hash']),
+            ]
             for ss in ss_lists:
-                f.write(ss + "\n")
-            f.close()
+                rc_conf.append(("proxy", ss))
 
-            # New Rule.
-            rule = iptc.Rule()
-            rule.protocol = "tcp"
+            conf_parser.write(rc_conf, filename)
 
-            # Add match to the rule.
-            match = iptc.Match(rule, "tcp")
-            match.sport = str(port)
-            rule.add_match(match)
+            # New Rule for port.
+            iptables_manager.insert_rule(port)
 
-            # Add target to the rule.
-            target = iptc.Target(rule, "ACCEPT")
-            rule.target = target
-
-            # Insert rule to the OUTPUT chain in filter Table.
-            output_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "OUTPUT")
-            output_chain.insert_rule(rule)
             return None, 201
+
         except Exception, e:
             log.error(e.message)
             log.error("ARGS:  " + str(port))
@@ -107,17 +91,10 @@ class CrossLanContainerRunningStatus(Resource):
             log.debug("POST DATA JSON: " + str(data))
             action = data["action"]
 
-            cl_container_home = os.environ["CL_CONTAINERS_HOME"]
             if action == "start":
                 if cow_process[port] is None:
                     sleep(0.5)
                     wd = cl_container_home + "/cl_container_" + str(port) + "/"
-
-                    # FIXME: there is some bug when I want to kill it.
-                    # cow = subprocess.Popen([cmd + " -rc " + rc_file], shell=True)
-                    # FIXME: if use the abs path, it can not be called.
-                    # cow_process[port] = subprocess.Popen([cmd, "-rc", rc_file])
-
                     cow_process[port] = subprocess.Popen(["./cow", "-rc", "./rc"], cwd=wd, stdout=subprocess.PIPE)
                     return None, 201
                 else:
@@ -176,49 +153,27 @@ class CrossLanContainerBindingIps(Resource):
             log.debug("CrossLanContainerBindingIps.put")
             log.debug("ARGS:  " + str(port) + " type: " + str(type(port)))
             ipsets = json.loads(request.get_data())["ipset"]
+            ipsets = [x.encode('UTF8') for x in ipsets]
             log.debug(ipsets)
 
-            cl_container_home = os.environ["CL_CONTAINERS_HOME"]
+            rc_parser = rcparser.ConfParser()
+            rc_file = cl_container_home + "/cl_container_" + str(port) + "/rc"
+            conf_for_ipsets = rc_parser.read(rc_file)
 
-            f = open(cl_container_home + "/cl_container_" + str(port) + "/rc", "r")
-            log.debug(cl_container_home + "/cl_container_" + str(port) + "/rc")
+            exist_flag = False
+            for index, (key, value) in enumerate(conf_for_ipsets):
+                if key == "allowedClient":
+                    conf_for_ipsets[index] = ("allowedClient", ipsets)
+                    exist_flag = True
 
-            lines = f.readlines()
-            f.close()
+            if not exist_flag:
+                conf_for_ipsets.append(("allowedClient", ipsets))
 
-            # Clear the ip set.
-            if len(ipsets) == 0:
-                if len(lines) == 2 + len(ss_lists) + 1:
-                    lines = lines[:-1]
-                    f = open(cl_container_home + "/cl_container_" + str(port) + "/rc", "w")
-                    log.debug(lines)
-                    f.writelines(lines)
-                    f.close()
+            log.debug(conf_for_ipsets)
+            rc_parser.write(conf_for_ipsets, rc_file)
 
-                return None, 201
+            return None, 201
 
-            # Update the ip set.
-            else:
-                log.debug(lines)
-                if len(lines) == 2 + len(ss_lists) + 1:
-                    lines = lines[:-1]
-                log.debug(lines)
-                last_line = "allowedClient = "
-
-                for i_t in range(0, len(ipsets) - 1):
-                    last_line = last_line + ipsets[i_t] + ","
-
-                # Last One omit the comma.
-                last_line = last_line + ipsets[len(ipsets) - 1] + "\n"
-
-                lines.append(last_line)
-
-                f = open(cl_container_home + "/cl_container_" + str(port) + "/rc", "w")
-                log.debug(lines)
-                f.writelines(lines)
-                f.close()
-
-                return None, 201
         except Exception, e:
             log.error(traceback.format_exc())
             log.error(e.message)
@@ -234,47 +189,12 @@ class CrossLanContainerDataUsage(Resource):
             log.debug("CrossLanContainerDataUsage.get")
             log.debug("ARGS:  " + str(port) + " type: " + str(type(port)))
 
-            filter_table = iptc.Table(iptc.Table.FILTER)
-            filter_table.refresh()
+            iptables_manager = iptman.IptMan()
+            bytes_counts = iptables_manager.get_rule_counter(port)
 
-            output_chain = iptc.Chain(filter_table, "OUTPUT")
-
-            bytes_counts = None
-            del_rule = None
-
-            for rule in output_chain.rules:
-                sport = str(rule.matches[0].parameters["sport"])
-                # log.debug(rule.get_counters())
-                if sport == str(port):
-                    counter = rule.get_counters()
-                    packets = counter[0]
-                    bytes_counts = counter[1]
-                    log.debug("packet #:" + str(packets))
-                    log.debug("bytes #:" + str(bytes_counts))
-                    del_rule = rule
-                    break
-            if bytes_counts is None:
-                raise Exception("NotFoundPort")
-
-            # Delete the rule and add it to zero counter.
-            output_chain.delete_rule(del_rule)
-
-            # New Rule.
-            rule = iptc.Rule()
-            rule.protocol = "tcp"
-
-            # Add match to the rule.
-            match = iptc.Match(rule, "tcp")
-            match.sport = str(port)
-            rule.add_match(match)
-
-            # Add target to the rule.
-            target = iptc.Target(rule, "ACCEPT")
-            rule.target = target
-
-            # Insert rule to the OUTPUT chain in filter Table.
-            output_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "OUTPUT")
-            output_chain.insert_rule(rule)
+            # Reset Counter
+            iptables_manager.delete_rule(port)
+            iptables_manager.insert_rule(port)
 
             # Logger
             du_log.info("port:" + str(port) + "\t" + "data:" + str(bytes_counts))
@@ -286,11 +206,47 @@ class CrossLanContainerDataUsage(Resource):
             log.error(traceback.format_exc())
             abort(400, message="Exception")
 
+class CrossLanContainerUserPasswd(Resource):
+    def put(self, port):
+        try:
+            log.debug("CrossLanContainerUserPasswd.put")
+            log.debug("ARGS:  " + str(port) + " type: " + str(type(port)))
+            userpasswd = json.loads(request.get_data())["userpasswd"]
+            log.debug(userpasswd)
+
+            # TODO Delete.
+
+            # TODO verify.
+            rc_parser = rcparser.ConfParser()
+            conf_file = cl_container_home + "/cl_container_" + str(port) + "/rc"
+            conf_for_userpasswd = rc_parser.read(conf_file)
+
+            exist_flag = False
+            for index, (key, value) in enumerate(conf_for_userpasswd):
+                if key == "userPasswd":
+                    conf_for_userpasswd[index] = ("userPasswd", userpasswd)
+                    exist_flag = True
+
+            if not exist_flag:
+                conf_for_userpasswd.append(("userPasswd", userpasswd))
+
+            rc_parser.write(conf_for_userpasswd, conf_file)
+            log.debug(conf_for_userpasswd)
+
+            return None, 201
+
+        except Exception, e:
+            log.error(traceback.format_exc())
+            log.error(e.message)
+            log.error("ARGS:  " + str(port))
+            abort(400, message="Exception")
+
 
 def check_accounting_rules():
     try:
+        # TODO move to iptman
         existed_port = {}
-        for index in range(10001, 10099):
+        for index in range(10001, 10100):
             existed_port[str(index)] = False
 
         filter_table = iptc.Table(iptc.Table.FILTER)
@@ -303,22 +259,7 @@ def check_accounting_rules():
 
         for (port, isExist) in existed_port.iteritems():
             if not isExist:
-                # Create Port.
-                rule = iptc.Rule()
-                rule.protocol = "tcp"
-
-                # Add match to the rule.
-                match = iptc.Match(rule, "tcp")
-                match.sport = str(port)
-                rule.add_match(match)
-
-                # Add target to the rule.
-                target = iptc.Target(rule, "ACCEPT")
-                rule.target = target
-
-                # Insert rule to the OUTPUT chain in filter Table.
-                output_chain = iptc.Chain(iptc.Table(iptc.Table.FILTER), "OUTPUT")
-                output_chain.append_rule(rule)
+                iptman.IptMan().insert_rule(port)
 
     except Exception, e:
         log.error(traceback.format_exc())
@@ -332,6 +273,7 @@ def rest_server():
         headquarter_controller.add_resource(CrossLanContainerRunningStatus, "/cl-containers/<int:port>/running-status")
         headquarter_controller.add_resource(CrossLanContainerBindingIps, "/cl-containers/<int:port>/binding-ips")
         headquarter_controller.add_resource(CrossLanContainerDataUsage, "/cl-containers/<int:port>/data-usage")
+        headquarter_controller.add_resource(CrossLanContainerUserPasswd, "/cl-containers/<int:port>/user-passwd")
         log.info("rest server start finish.")
         headquarter_app.run(host='202.117.15.79', port=12345, debug=True, use_reloader=False)
     except Exception, e:
@@ -377,7 +319,7 @@ def process_cmd(argv):
         sys.exit(2)
 
 
-def running_stats_save():
+def running_stats_save(signum, frame):
     signal.signal(signal.SIGINT, original_sigint)
     log.info("running_stats_save")
     try:
@@ -405,7 +347,7 @@ def ss_config(conf_file):
         for index in range(0, len(ss_lists)):
             ss_lists[index] = str(ss_lists[index])
 
-        # log.debug(ss_lists)
+            # log.debug(ss_lists)
 
     except Exception, e:
         log.error(traceback.format_exc())
@@ -421,7 +363,6 @@ def interruption_restore(restore_file):
         for port in cow_process_port_list:
             port = int(port)
             sleep(0.5)
-            cl_container_home = os.environ["CL_CONTAINERS_HOME"]
             wd = cl_container_home + "/cl_container_" + str(port) + "/"
             cow_process[port] = subprocess.Popen(["./cow", "-rc", "./rc"], cwd=wd, stdout=subprocess.PIPE)
 
