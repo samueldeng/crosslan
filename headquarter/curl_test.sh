@@ -12,3 +12,5 @@ curl -H "Content-Type: application/json"  http://127.0.0.1:5000/cl-containers/10
 echo ----------------------------------------------------
 curl -H "Content-Type: application/json"  http://127.0.0.1:5000/cl-containers/10001/data-usage
 echo ----------------------------------------------------
+echo ----------------------------------------------------
+curl -H "Content-Type: application/json"  http://127.0.0.1:5000/cl-containers/10001/user-passwd -X PUT -d '{"userpasswd": "samueldeng:samueldeng"}'
