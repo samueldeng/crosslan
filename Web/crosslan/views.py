@@ -235,7 +235,21 @@ def rebindIp(request):
 			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
 	except Exception, e:
 		print traceback.format_exc()
-		return HttpResponse(json.dumps({"message":"Error"}), content_type="text/plain")
+		return HttpResponse(json.dumps({"message":"Server Error"}), content_type="text/plain")
+
+@login_required(login_url=reverse_lazy('crosslan:signin'))
+def setProxyPasswd(request):
+	try:
+		if(request.method == 'POST'):
+			u = request.user.crosslanuser
+			authpair = u.user.username + ':' + request.POST['password']
+			backend.setProxyAuth(u.port, authpair)
+			return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")
+		else:
+			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
+	except Exception, e:
+		print traceback.format_exc()
+		return HttpResponse(json.dumps({"message":"Server Error"}), content_type="text/plain")
 
 @user_passes_test(lambda u: u.is_superuser, login_url=reverse_lazy('crosslan:signin'))
 def adminControlPanel(request):

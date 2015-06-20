@@ -24,10 +24,13 @@ def unique(l):
 
 def getHuman(balance):
 	step = 0
-	while(balance > 1000):
+	while(balance >= 1000):
 		balance = balance / 1000.0
 		step = step + 1
-	balance = str(balance)[:3]
+	balance = str(balance)[:4]
+	# Truncate last '.'
+	if(balance[-1]=='.'):
+		balance = balance[:-1]
 	unit = ''
 	if (step==0):
 		unit = 'B'
@@ -45,6 +48,13 @@ def getHuman(balance):
 
 def getClientIp(request):
 	return get_ip(request)
+
+def getMsgOrFalse(r):
+	try:
+		m = r.json()
+	except:
+		m = False
+	return m
 
 def genRedeem():
 	chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',

@@ -89,10 +89,6 @@ div.panel {
 	display: none;
 }
 
-#showPass {
-	color:#000;
-}
-
 label.label-wrap {
 	line-height: 1.2;
 }
@@ -100,4 +96,13 @@ label.label-wrap {
 .input-group[class*=col-] {
 	padding-left: 15px;
 	padding-right: 15px;
+	float:left!important;
+}
+
+.input-group-inside[class*=col-] > input {
+	border-right: none;
+}
+.input-group-inside[class*=col-] > span > button {
+	background-color: transparent!important;
+	color:#000!important;
 }

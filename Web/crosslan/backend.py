@@ -43,7 +43,8 @@ def operateProxy(port, action):
 		print '[FAILED]Backend.operateProxy():\n' \
 			+ '\tUrl: %s\n' %url \
 			+ '\tAction: %s\n' %action \
-			+ '\tStatus Code: %s\n' %r.status_code
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
 		return False
 
 # Here Begins Functions Communicate with Backend
@@ -59,7 +60,8 @@ def newUser(port):
 	else:
 		print '[FAILED]Backend.newUser():\n' \
 			+ '\tUrl: %s\n' %url \
-			+ '\tStatus Code: %s\n' %r.status_code
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
 		return False
 
 def startProxy(port):
@@ -85,7 +87,8 @@ def getProxyStatus(port):
 	else:
 		print '[FAILED]Backend.getProxyStatus():\n'  \
 			+ '\tUrl: %s\n'  %url \
-			+ '\tStatus Code: %s\n' %r.status_code
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
 		return 'Unknown'
 
 def setBindIp(port, ips):
@@ -104,7 +107,25 @@ def setBindIp(port, ips):
 		print '[FAILED]Backend.setBindIp():\n'  \
 			+ '\tUrl: %s\n'  %url \
 			+ '\tIPs: %s\n'  %ips \
-			+ '\tStatus Code: %s\n' %r.status_code
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
+		return False
+
+def setProxyAuth(port, authpair):
+	url = str(port) + '/user-passwd'
+	data = {'userpasswd':authpair}
+	r = Put(url, data)
+	if(r.status_code == 201):
+		return True
+	elif(r.status_code == 800):
+		print '[FAILED]Backend.setProxyAuth(): RequestsError\n'
+		return False
+	else:
+		print '[FAILED]Backend.setProxyAuth():\n'  \
+			+ '\tUrl: %s\n'  %url \
+			+ '\tIPs: %s\n'  %ips \
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
 		return False
 
 def getDataUsage(port):
@@ -118,7 +139,8 @@ def getDataUsage(port):
 	else:
 		print '[FAILED]Backend.getDataUsage():\n'  \
 			+ '\tUrl: %s\n' %url \
-			+ '\tStatus Code: %s\n' %r.status_code
+			+ '\tStatus Code: %s\n' %r.status_code \
+			+ '\tJSON: %s\n' %utils.getMsgOrFalse(r)
 		return False
 
 def updateData(user):

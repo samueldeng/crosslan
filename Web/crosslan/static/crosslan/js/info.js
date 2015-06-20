@@ -194,6 +194,41 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#showProxyPass').click(function(){
+		$(this).children('i').toggleClass('fa-eye').toggleClass('fa-eye-slash');
+		if ($('#inputProxyPassword').attr('type') == 'password'){
+			$('#inputProxyPassword').attr('type','text');
+		} else {
+			$('#inputProxyPassword').attr('type','password');
+		}
+		$('#inputProxyPassword').focus();
+	});
+
+	$('#changeProxyAuthBtn').click(function(){
+		var password = $('#inputProxyPassword').prop('value');
+		if (password == "") {
+			alert("Empty Password is not Allowed.");
+			return;
+		}
+		var data = $('#csrfForm').serializeArray();
+		data.push(newObjectFactory('password', password));
+		$.ajax({
+			url: 'proxyauth/',
+			type: 'POST',
+			data: data,
+			success: function(data, textStatus, jqXHR){
+				$('#inputProxyPassword').prop('value','');
+				alert("Set successfully.");
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert("error");
+				if (errorThrown == "FORBIDDEN") {
+					location.href = $('a#home').attr("href");
+				}
+			}
+		});
+	});
+
 	$(':checkbox').on('change.radiocheck', function() {
 		bindingIpChangeEvent();
   	});
