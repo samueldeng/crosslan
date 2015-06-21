@@ -116,7 +116,10 @@ def setProxyAuth(port, authpair):
 	data = {'userpasswd':authpair}
 	r = Put(url, data)
 	if(r.status_code == 201):
-		return True
+		if(getProxyStatus(port) == 'Running'):
+			return restartProxy(port)
+		else:
+			return True
 	elif(r.status_code == 800):
 		print '[FAILED]Backend.setProxyAuth(): RequestsError\n'
 		return False
