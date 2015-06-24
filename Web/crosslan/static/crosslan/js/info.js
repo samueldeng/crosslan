@@ -62,7 +62,7 @@ $(document).ready(function(){
 			if(!n){
 				return true;
 			}else{
-				if (n.length==0 || isNaN(n) || n<0 || n>255){
+				if (n.length==0 || isNaN(n) || n<0 || n>32){
 					return false;
 				}
 			}
@@ -217,8 +217,18 @@ $(document).ready(function(){
 			type: 'POST',
 			data: data,
 			success: function(data, textStatus, jqXHR){
+				data = $.parseJSON(data);
 				$('#inputProxyPassword').prop('value','');
-				alert("Set successfully.");
+				switch(data.code){
+					case 0:
+					alert("Set successfully.");
+					break;
+					case 1:
+					alert("Empty Password is not Allowd.");
+					default:
+					alert('Report if you see this message. Error Code('+data.code + ')');
+					break;
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert("error");
@@ -302,7 +312,21 @@ $(document).ready(function(){
 			type: 'POST',
 			data: data,
 			success: function(data, textStatus, jqXHR){
-				bindingIpChangeDone();
+				data = $.parseJSON(data)
+				switch(data.code){
+					case 0:
+					bindingIpChangeDone();
+					break;
+					case 1:
+					alert("Wrong BindIP Choice.");
+					break;
+					case 2:
+					alert("Invalid IP Address.");
+					break;
+					default:
+					alert('Report if you see this message. Error Code('+data.code + ')');
+					break;
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert("error");
@@ -340,5 +364,7 @@ $(document).ready(function(){
 		bindingIpChangeDone();
 		e.preventDefault();
 	});
+
+	$("a[href='#refresh']").click();
 
 });

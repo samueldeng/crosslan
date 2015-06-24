@@ -56,6 +56,30 @@ def getMsgOrFalse(r):
 		m = False
 	return m
 
+def validateIPAddress(ip):
+	if(not isinstance(ip, str)):
+		return False
+	parts = str.split(ip, '.')
+
+	if(len(parts)!=4):
+		return False
+
+	last = parts.pop()
+	parts = parts + str.split(last, '/')
+
+	for i in range(4):
+		n = parts[i]
+		if(len(n)==0 or not n.isdigit() or int(n)>255):
+			return False
+
+	if(len(parts)>5):
+		return False
+	elif(len(parts)==5):
+		n = parts[4]
+		if(len(n)==0 or not n.isdigit() or int(n)>32):
+			return False
+	return True
+
 def genRedeem():
 	chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
 	'0','1','2','3','4','5','6','7','8','9',

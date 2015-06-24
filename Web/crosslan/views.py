@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db import IntegrityError
 
 from crosslan import models, utils, backend, conf
-import json, traceback
+import json, traceback, thread
 
 # Create your views here.
 def index(request):
@@ -49,6 +49,7 @@ def signup(request):
 							clUser.delete()
 							return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
 						backend.startProxy(port)
+						backend.setProxyAuth(port, username+':'+password)
 						return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
 					else:
 						return HttpResponse(json.dumps({'status':2}), content_type="text/plain")
@@ -84,6 +85,7 @@ def signup(request):
 						user.delete()
 						return HttpResponse(json.dumps({'status':6}), content_type="text/plain")
 					backend.startProxy(port)
+					backend.setProxyAuth(port, username+':'+password)
 					return HttpResponse(json.dumps({'status':0, 'redirect':reverse('crosslan:signin')}), content_type="text/plain")
 		else:
 			c = {}
@@ -136,7 +138,8 @@ def info(request):
 		return signout()
 	pachost = conf.PAC_HOST + ':' + str(u.port) + '/pac'
 	host = u.host + ':' + str(u.port)
-	status = backend.getProxyStatus(u.port)
+	# status = backend.getProxyStatus(u.port)
+	status = "Unknown"
 	balance = utils.getHuman(u.data)
 	bind = u.bind
 	clientIp = utils.getClientIp(request)
@@ -147,9 +150,9 @@ def info(request):
 	if(clientIp not in ips):
 		newIp = models.BindingIP.objects.bind_ip(user=u, ip=clientIp)
 		newIp.save()
-		backend.setBindIp(u.port,ips)
-	if (clientIp in ips):
-		ips.remove(clientIp)
+		ips.append(clientIp)
+		thread.start_new_thread(backend.setBindIp, (u.port, ips))
+	ips.remove(clientIp)
 	c = {
 		 'pachost': pachost,
 		 'host': host,
@@ -168,7 +171,7 @@ def refreshInfo(request):
 	u = request.user.crosslanuser
 	host = u.host + ':' + str(u.port)
 	if(backend.updateData(user=u) is False):
-		balance = 'Unknown'
+		balance = utils.getHuman(u.data)+' (Not Updated)'
 	else:
 		balance = utils.getHuman(u.data)
 	status = backend.getProxyStatus(u.port)
@@ -210,10 +213,13 @@ def rebindIp(request):
 			elif(request.POST['bind'] == "true"):
 				u.bind = True
 			else:
-				return HttpResponse(json.dumps({"message":"Bind Error"}), content_type="text/plain")
+				return HttpResponse(json.dumps({"code":1}), content_type="text/plain")
 			u.save()
 			ips = request.POST['ips'].split(",")
 			ips = utils.unique(ips)
+			for ip in ips:
+				if(not utils.validateIPAddress(ip)):
+					return HttpResponse(json.dumps({"code":2}), content_type="text/plain")
 			existsIpObjects = models.BindingIP.objects.filter(user=u)
 			existsIps = []
 			ipToRemove = []
@@ -229,8 +235,9 @@ def rebindIp(request):
 					i.save()
 			if(not u.bind):
 				ips = []
-			backend.setBindIp(u.port,ips)
-			return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")
+			if(not backend.setBindIp(u.port,ips)):
+				return HttpResponse(json.dumps({"code":3}), content_type="text/plain")
+			return HttpResponse(json.dumps({"code":0}), content_type="text/plain")
 		else:
 			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
 	except Exception, e:
@@ -241,10 +248,14 @@ def rebindIp(request):
 def setProxyPasswd(request):
 	try:
 		if(request.method == 'POST'):
+			password = request.POST['password']
+			if(pasword==''):
+				return HttpResponse(json.dumps({"code":1}), content_type="text/plain")
 			u = request.user.crosslanuser
-			authpair = u.user.username + ':' + request.POST['password']
-			backend.setProxyAuth(u.port, authpair)
-			return HttpResponse(json.dumps({"message":"Good"}), content_type="text/plain")
+			authpair = u.user.username + ':' + password
+			if(not backend.setProxyAuth(u.port, authpair)):
+				return HttpResponse(json.dumps({"code":2}), content_type="text/plain")
+			return HttpResponse(json.dumps({"code":0}), content_type="text/plain")
 		else:
 			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
 	except Exception, e:
