@@ -5,6 +5,13 @@ __pycache__/
 # C extensions
 *.so
 
+# sublime
+*.sublime-*
+*.bat
+
+# django
+settings.py
+
 # Distribution / packaging
 .Python
 env/

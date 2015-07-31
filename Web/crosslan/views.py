@@ -208,18 +208,28 @@ def rebindIp(request):
 	try:
 		if(request.method == "POST"):
 			u = request.user.crosslanuser
+			# Validate bind
 			if(request.POST['bind'] == "false"):
-				u.bind = False
+				bind = False
 			elif(request.POST['bind'] == "true"):
-				u.bind = True
+				bind = True
 			else:
 				return HttpResponse(json.dumps({"code":1}), content_type="text/plain")
-			u.save()
+			# Validate IPs
 			ips = request.POST['ips'].split(",")
 			ips = utils.unique(ips)
 			for ip in ips:
 				if(not utils.validateIPAddress(ip)):
 					return HttpResponse(json.dumps({"code":2}), content_type="text/plain")
+			# Try to set Bind IP
+			ipsToSet = ips
+			if(not bind):
+				ipsToSet = []
+			if(not backend.setBindIp(u.port,ipsToSet)):
+				return HttpResponse(json.dumps({"code":3}), content_type="text/plain")
+			# update database
+			u.bind = bind
+			u.save()
 			existsIpObjects = models.BindingIP.objects.filter(user=u)
 			existsIps = []
 			ipToRemove = []
@@ -233,10 +243,6 @@ def rebindIp(request):
 				if(ip not in existsIps):
 					i = models.BindingIP.objects.bind_ip(user=u, ip=ip)
 					i.save()
-			if(not u.bind):
-				ips = []
-			if(not backend.setBindIp(u.port,ips)):
-				return HttpResponse(json.dumps({"code":3}), content_type="text/plain")
 			return HttpResponse(json.dumps({"code":0}), content_type="text/plain")
 		else:
 			return HttpResponse(json.dumps({"message":"Bad"}), content_type="text/plain")
@@ -249,7 +255,7 @@ def setProxyPasswd(request):
 	try:
 		if(request.method == 'POST'):
 			password = request.POST['password']
-			if(pasword==''):
+			if(password==''):
 				return HttpResponse(json.dumps({"code":1}), content_type="text/plain")
 			u = request.user.crosslanuser
 			authpair = u.user.username + ':' + password

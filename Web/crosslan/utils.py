@@ -57,15 +57,16 @@ def getMsgOrFalse(r):
 	return m
 
 def validateIPAddress(ip):
-	if(not isinstance(ip, str)):
-		return False
-	parts = str.split(ip, '.')
+	# if(not isinstance(ip, str)):
+	# 	print 'Utils: %s is not an instance of str' %ip
+	# 	return False
+	parts = ip.split('.')
 
 	if(len(parts)!=4):
 		return False
 
 	last = parts.pop()
-	parts = parts + str.split(last, '/')
+	parts = parts + last.split('/')
 
 	for i in range(4):
 		n = parts[i]

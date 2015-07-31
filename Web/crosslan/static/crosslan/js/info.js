@@ -316,12 +316,19 @@ $(document).ready(function(){
 				switch(data.code){
 					case 0:
 					bindingIpChangeDone();
+					// Update last*
+					lastAdded = 0;
+					lastBind = bind;
+					lastIp = getCheckedIp();
 					break;
 					case 1:
 					alert("Wrong BindIP Choice.");
 					break;
 					case 2:
 					alert("Invalid IP Address.");
+					break;
+					case 3:
+					alert("Internal Server Error. Contact us please.");
 					break;
 					default:
 					alert('Report if you see this message. Error Code('+data.code + ')');
@@ -335,11 +342,6 @@ $(document).ready(function(){
 				}
 			}
 		});
-
-		// Update last*
-		lastAdded = 0;
-		lastBind = bind;
-		lastIp = getCheckedIp();
 		e.preventDefault();
 	});
 
