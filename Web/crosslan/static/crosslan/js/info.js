@@ -16,9 +16,6 @@ $(document).ready(function(){
 	function bindingIpChangeEvent(){
 		$('#binding').addClass('changed');
 		$('#changeSubmitWrapper').show();
-		$(':checkbox').on('change.radiocheck', function() {
-			bindingIpChangeEvent();
-		});
 	}
 
 	function bindingIpChangeDone(){
@@ -266,6 +263,9 @@ $(document).ready(function(){
 		var newIp = $('#addIpInput').prev().children(":checkbox");
 		newIp.after(input.prop('value'));
 		newIp.radiocheck('check');
+		newIp.on('change.radiocheck', function() {
+			bindingIpChangeEvent();
+		});
 		input.prop('value','');
 		$('#addIpInput').hide();
 		$('a#addIp').show();
